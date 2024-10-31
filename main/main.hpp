@@ -33,7 +33,7 @@
 #define DEG2RAD( x ) ( ( float )( x ) * ( float )( ( float )( M_PI ) / 180.0f ) )
 #define RAD2DEG( x ) ( ( float )( x ) * ( float )( 180.0f / ( float )( M_PI ) ) )
 
-typedef BOOL(__fastcall* is_dlc_present_fn)(__int64 a1, __int64 a2);
+typedef __int64 (__fastcall* is_dlc_present_fn)(__int64 a1, __int64 a2);
 
 typedef enum _MEMORY_INFORMATION_CLASS {
 	MemoryBasicInformation
@@ -61,7 +61,7 @@ namespace hooks
 		extern NtQueryVirtualMemory_fn o_ntqvm;
 	}
 
-	extern BOOL __fastcall does_cam_exist_hook(__int64 a1, __int64 a2);
+	extern __int64 __fastcall does_cam_exist_hook(__int64 a1, __int64 a2);
 
 	extern 	NTSTATUS NTAPI NtQueryVirtualMemory_hook(
 		IN HANDLE ProcessHandle,

@@ -76,7 +76,7 @@ namespace hooks
         NtQueryVirtualMemory_fn o_ntqvm;
     }
 
-    BOOL __fastcall does_cam_exist_hook(__int64 a1, __int64 a2) {
+    __int64 __fastcall does_cam_exist_hook(__int64 a1, __int64 a2) {
 
         fiber::on_tick();
         return original::o_does_cam_exist(a1, a2);
@@ -106,8 +106,8 @@ namespace hooks
 
         if (MH_Initialize() == MH_OK) {
             MH_CreateHookApi(L"ntdll.dll", "NtQueryVirtualMemory", NtQueryVirtualMemory_hook, reinterpret_cast<void**>(&original::o_ntqvm));
-            auto does_cam_exist = (void*)get_handler(0x153AD457764FD704);
-            MH_CreateHook(does_cam_exist, does_cam_exist_hook, reinterpret_cast<void**>(&original::o_does_cam_exist));
+            auto does_cam_exist = memory::find_signature(0, "\x40\x53\x48\x83\xEC\x20\x33\xDB\x81\xF9", "xxxxxxxxxx");
+            MH_CreateHook((PVOID)does_cam_exist, does_cam_exist_hook, reinterpret_cast<void**>(&original::o_does_cam_exist));
             MH_EnableHook(MH_ALL_HOOKS);
         }
     }
